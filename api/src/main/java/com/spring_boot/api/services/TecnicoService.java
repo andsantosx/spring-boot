@@ -35,7 +35,7 @@ public class TecnicoService {
         objDTO.setId(null);
         validaPorCpfEEmail(objDTO);
         Tecnico newObj = new Tecnico(null, objDTO.getNome(), objDTO.getCpf(), objDTO.getEmail(), objDTO.getSenha());
-        newObj.clearPerfis(); // Use the new correct method
+        newObj.clearPerfis(); // Correct method call
         objDTO.getPerfis().forEach(perfil -> newObj.addPerfil(perfil));
         return repository.save(newObj);
     }
@@ -45,12 +45,11 @@ public class TecnicoService {
         Tecnico oldObj = findById(id);
         validaPorCpfEEmail(objDTO);
 
-        // Update fields of the existing object
         oldObj.setNome(objDTO.getNome());
         oldObj.setCpf(objDTO.getCpf());
         oldObj.setEmail(objDTO.getEmail());
         oldObj.setSenha(objDTO.getSenha());
-        oldObj.clearPerfis();
+        oldObj.clearPerfis(); // Correct method call
         objDTO.getPerfis().forEach(perfil -> oldObj.addPerfil(perfil));
 
         return repository.save(oldObj);

@@ -35,7 +35,7 @@ public class ClienteService {
         objDTO.setId(null);
         validaPorCpfEEmail(objDTO);
         Cliente newObj = new Cliente(null, objDTO.getNome(), objDTO.getCpf(), objDTO.getEmail(), objDTO.getSenha());
-        newObj.getPerfis().clear(); // Clear default profiles from Pessoa
+        newObj.clearPerfis(); // Correct method call
         objDTO.getPerfis().forEach(perfil -> newObj.addPerfil(perfil));
         return repository.save(newObj);
     }
@@ -45,12 +45,11 @@ public class ClienteService {
         Cliente oldObj = findById(id);
         validaPorCpfEEmail(objDTO);
         
-        // Update fields of the existing object
         oldObj.setNome(objDTO.getNome());
         oldObj.setCpf(objDTO.getCpf());
         oldObj.setEmail(objDTO.getEmail());
         oldObj.setSenha(objDTO.getSenha());
-        oldObj.getPerfis().clear();
+        oldObj.clearPerfis(); // Correct method call
         objDTO.getPerfis().forEach(perfil -> oldObj.addPerfil(perfil));
         
         return repository.save(oldObj);
