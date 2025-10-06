@@ -30,8 +30,11 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	// runtimeOnly 'com.h2database:h2' // No longer needed for MySQL setup
+
+    // Database drivers
+	runtimeOnly 'com.mysql:mysql-connector-j'   // For dev and prod profiles
+	testRuntimeOnly 'com.h2database:h2'         // For test profile
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
