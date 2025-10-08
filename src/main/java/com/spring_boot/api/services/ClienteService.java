@@ -1,10 +1,7 @@
 package com.spring_boot.api.services;
 
-import com.spring_boot.api.domain.Pessoa;
 import com.spring_boot.api.domain.Cliente;
-import com.spring_boot.api.domain.enums.Perfil;
 import com.spring_boot.api.dtos.ClienteDTO;
-import com.spring_boot.api.repositories.PessoaRepository;
 import com.spring_boot.api.repositories.ClienteRepository;
 import com.spring_boot.api.services.exceptions.DataIntegrityViolationException;
 import com.spring_boot.api.services.exceptions.ObjectNotFoundException;
@@ -20,8 +17,6 @@ public class ClienteService {
 
     @Autowired
     private ClienteRepository repository;
-    @Autowired
-    private PessoaRepository pessoaRepository;
 
     public Cliente findById(Integer id) {
         Optional<Cliente> obj = repository.findById(id);
@@ -34,24 +29,18 @@ public class ClienteService {
 
     public Cliente create(ClienteDTO objDTO) {
         objDTO.setId(null);
-        validaPorCpfEEmail(objDTO);
         Cliente newObj = new Cliente(null, objDTO.getNome(), objDTO.getCpf(), objDTO.getEmail(), objDTO.getSenha());
-        newObj.clearPerfis();
-        objDTO.getPerfis().forEach(p -> newObj.addPerfil(Perfil.toEnum(p)));
         return repository.save(newObj);
     }
 
     public Cliente update(Integer id, @Valid ClienteDTO objDTO) {
         objDTO.setId(id);
         Cliente oldObj = findById(id);
-        validaPorCpfEEmail(objDTO);
         
         oldObj.setNome(objDTO.getNome());
         oldObj.setCpf(objDTO.getCpf());
         oldObj.setEmail(objDTO.getEmail());
         oldObj.setSenha(objDTO.getSenha());
-        oldObj.clearPerfis();
-        objDTO.getPerfis().forEach(p -> oldObj.addPerfil(Perfil.toEnum(p)));
         
         return repository.save(oldObj);
     }
@@ -62,17 +51,5 @@ public class ClienteService {
             throw new DataIntegrityViolationException("Cliente possui ordens de serviço e não pode ser deletado!");
         }
         repository.deleteById(id);
-    }
-
-    private void validaPorCpfEEmail(ClienteDTO objDTO) {
-        Optional<Pessoa> obj = pessoaRepository.findByCpf(objDTO.getCpf());
-        if (obj.isPresent() && !obj.get().getId().equals(objDTO.getId())) {
-            throw new DataIntegrityViolationException("CPF já cadastrado no sistema!");
-        }
-
-        obj = pessoaRepository.findByEmail(objDTO.getEmail());
-        if (obj.isPresent() && !obj.get().getId().equals(objDTO.getId())) {
-            throw new DataIntegrityViolationException("E-mail já cadastrado no sistema!");
-        }
     }
 }
