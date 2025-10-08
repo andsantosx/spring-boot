@@ -2,6 +2,7 @@ package com.spring_boot.api.services;
 
 import com.spring_boot.api.domain.Pessoa;
 import com.spring_boot.api.domain.Tecnico;
+import com.spring_boot.api.domain.enums.Perfil;
 import com.spring_boot.api.dtos.TecnicoDTO;
 import com.spring_boot.api.repositories.PessoaRepository;
 import com.spring_boot.api.repositories.TecnicoRepository;
@@ -35,8 +36,8 @@ public class TecnicoService {
         objDTO.setId(null);
         validaPorCpfEEmail(objDTO);
         Tecnico newObj = new Tecnico(null, objDTO.getNome(), objDTO.getCpf(), objDTO.getEmail(), objDTO.getSenha());
-        newObj.clearPerfis(); // Correct method call
-        objDTO.getPerfis().forEach(perfil -> newObj.addPerfil(perfil));
+        newObj.clearPerfis();
+        objDTO.getPerfis().forEach(p -> newObj.addPerfil(Perfil.toEnum(p)));
         return repository.save(newObj);
     }
 
@@ -49,8 +50,8 @@ public class TecnicoService {
         oldObj.setCpf(objDTO.getCpf());
         oldObj.setEmail(objDTO.getEmail());
         oldObj.setSenha(objDTO.getSenha());
-        oldObj.clearPerfis(); // Correct method call
-        objDTO.getPerfis().forEach(perfil -> oldObj.addPerfil(perfil));
+        oldObj.clearPerfis();
+        objDTO.getPerfis().forEach(p -> oldObj.addPerfil(Perfil.toEnum(p)));
 
         return repository.save(oldObj);
     }
