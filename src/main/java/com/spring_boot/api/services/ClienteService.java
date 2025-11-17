@@ -1,6 +1,7 @@
 package com.spring_boot.api.services;
 
 import com.spring_boot.api.domain.Cliente;
+import com.spring_boot.api.domain.enums.Status;
 import com.spring_boot.api.dtos.ClienteDTO;
 import com.spring_boot.api.mappers.ClienteMapper;
 import com.spring_boot.api.repositories.ClienteRepository;
@@ -52,8 +53,11 @@ public class ClienteService {
 
     public void delete(Integer id) {
         Cliente obj = findById(id);
-        if (obj.getChamados().size() > 0) {
-            throw new DataIntegrityViolationException("Cliente possui ordens de serviço e não pode ser deletado!");
+        boolean hasOpenChamados = obj.getChamados().stream()
+                .anyMatch(chamado -> chamado.getStatus() != Status.ENCERRADO);
+
+        if (hasOpenChamados) {
+            throw new DataIntegrityViolationException("Cliente possui chamados em aberto e não pode ser deletado!");
         }
         repository.deleteById(id);
     }

@@ -1,5 +1,6 @@
 package com.spring_boot.api.dtos;
 
+import br.com.caelum.stella.bean.validation.CPF;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -17,8 +18,8 @@ public class TecnicoDTO implements Serializable {
     @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
     protected String nome;
 
+    @CPF(message = "CPF inválido")
     @NotBlank(message = "O campo CPF é requerido")
-    @Size(min = 11, max = 11, message = "O CPF deve ter 11 dígitos")
     protected String cpf;
 
     @NotBlank(message = "O campo EMAIL é requerido")

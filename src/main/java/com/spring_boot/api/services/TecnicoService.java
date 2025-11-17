@@ -1,6 +1,7 @@
 package com.spring_boot.api.services;
 
 import com.spring_boot.api.domain.Tecnico;
+import com.spring_boot.api.domain.enums.Status;
 import com.spring_boot.api.dtos.TecnicoDTO;
 import com.spring_boot.api.mappers.TecnicoMapper;
 import com.spring_boot.api.repositories.TecnicoRepository;
@@ -52,8 +53,11 @@ public class TecnicoService {
 
     public void delete(Integer id) {
         Tecnico obj = findById(id);
-        if (obj.getChamados().size() > 0) {
-            throw new DataIntegrityViolationException("Técnico possui ordens de serviço e não pode ser deletado!");
+        boolean hasOpenChamados = obj.getChamados().stream()
+                .anyMatch(chamado -> chamado.getStatus() != Status.ENCERRADO);
+
+        if (hasOpenChamados) {
+            throw new DataIntegrityViolationException("Técnico possui chamados em aberto e não pode ser deletado!");
         }
         repository.deleteById(id);
     }
