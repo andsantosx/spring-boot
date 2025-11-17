@@ -2,6 +2,7 @@ package com.spring_boot.api.resources;
 
 import com.spring_boot.api.domain.Chamado;
 import com.spring_boot.api.dtos.ChamadoDTO;
+import com.spring_boot.api.mappers.ChamadoMapper;
 import com.spring_boot.api.services.ChamadoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/chamados")
@@ -20,17 +20,19 @@ public class ChamadoResource {
     @Autowired
     private ChamadoService service;
 
+    @Autowired
+    private ChamadoMapper mapper;
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<ChamadoDTO> findById(@PathVariable Integer id) {
         Chamado obj = service.findById(id);
-        return ResponseEntity.ok().body(new ChamadoDTO(obj));
+        return ResponseEntity.ok().body(mapper.toDTO(obj));
     }
 
     @GetMapping
     public ResponseEntity<List<ChamadoDTO>> findAll() {
         List<Chamado> list = service.findAll();
-        List<ChamadoDTO> listDTO = list.stream().map(ChamadoDTO::new).collect(Collectors.toList());
-        return ResponseEntity.ok().body(listDTO);
+        return ResponseEntity.ok().body(mapper.toDTOList(list));
     }
 
     @PostMapping
@@ -43,6 +45,6 @@ public class ChamadoResource {
     @PutMapping(value = "/{id}")
     public ResponseEntity<ChamadoDTO> update(@PathVariable Integer id, @Valid @RequestBody ChamadoDTO objDTO) {
         Chamado newObj = service.update(id, objDTO);
-        return ResponseEntity.ok().body(new ChamadoDTO(newObj));
+        return ResponseEntity.ok().body(mapper.toDTO(newObj));
     }
 }

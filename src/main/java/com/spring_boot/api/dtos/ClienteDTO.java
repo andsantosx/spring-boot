@@ -1,8 +1,9 @@
 package com.spring_boot.api.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.spring_boot.api.domain.Cliente;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,16 +13,20 @@ public class ClienteDTO implements Serializable {
 
     protected Integer id;
 
-    @NotNull(message = "O campo NOME é requerido")
+    @NotBlank(message = "O campo NOME é requerido")
+    @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
     protected String nome;
 
-    @NotNull(message = "O campo CPF é requerido")
+    @NotBlank(message = "O campo CPF é requerido")
+    @Size(min = 11, max = 11, message = "O CPF deve ter 11 dígitos")
     protected String cpf;
 
-    @NotNull(message = "O campo EMAIL é requerido")
+    @NotBlank(message = "O campo EMAIL é requerido")
+    @Email(message = "Formato de e-mail inválido")
     protected String email;
 
-    @NotNull(message = "O campo SENHA é requerido")
+    @NotBlank(message = "O campo SENHA é requerido")
+    @Size(min = 6, max = 20, message = "A senha deve ter entre 6 e 20 caracteres")
     protected String senha;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -31,15 +36,7 @@ public class ClienteDTO implements Serializable {
         super();
     }
 
-    public ClienteDTO(Cliente obj) {
-        super();
-        this.id = obj.getId();
-        this.nome = obj.getNome();
-        this.cpf = obj.getCpf();
-        this.email = obj.getEmail();
-        this.senha = obj.getSenha();
-        this.dataCriacao = obj.getDataCriacao();
-    }
+    // Getters e Setters ...
 
     public Integer getId() {
         return id;

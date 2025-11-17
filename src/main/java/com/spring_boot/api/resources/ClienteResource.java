@@ -2,6 +2,7 @@ package com.spring_boot.api.resources;
 
 import com.spring_boot.api.domain.Cliente;
 import com.spring_boot.api.dtos.ClienteDTO;
+import com.spring_boot.api.mappers.ClienteMapper;
 import com.spring_boot.api.services.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/clientes")
@@ -20,17 +20,19 @@ public class ClienteResource {
     @Autowired
     private ClienteService service;
 
+    @Autowired
+    private ClienteMapper mapper;
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<ClienteDTO> findById(@PathVariable Integer id) {
         Cliente obj = service.findById(id);
-        return ResponseEntity.ok().body(new ClienteDTO(obj));
+        return ResponseEntity.ok().body(mapper.toDTO(obj));
     }
 
     @GetMapping
     public ResponseEntity<List<ClienteDTO>> findAll() {
         List<Cliente> list = service.findAll();
-        List<ClienteDTO> listDTO = list.stream().map(ClienteDTO::new).collect(Collectors.toList());
-        return ResponseEntity.ok().body(listDTO);
+        return ResponseEntity.ok().body(mapper.toDTOList(list));
     }
 
     @PostMapping
@@ -43,7 +45,7 @@ public class ClienteResource {
     @PutMapping(value = "/{id}")
     public ResponseEntity<ClienteDTO> update(@PathVariable Integer id, @Valid @RequestBody ClienteDTO objDTO) {
         Cliente obj = service.update(id, objDTO);
-        return ResponseEntity.ok().body(new ClienteDTO(obj));
+        return ResponseEntity.ok().body(mapper.toDTO(obj));
     }
 
     @DeleteMapping(value = "/{id}")

@@ -1,7 +1,7 @@
 package com.spring_boot.api.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.spring_boot.api.domain.Chamado;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
@@ -24,10 +24,10 @@ public class ChamadoDTO implements Serializable {
     @NotNull(message = "O campo STATUS é requerido")
     private Integer status;
 
-    @NotNull(message = "O campo TÍTULO é requerido")
+    @NotBlank(message = "O campo TÍTULO é requerido")
     private String titulo;
 
-    @NotNull(message = "O campo OBSERVAÇÕES é requerido")
+    @NotBlank(message = "O campo OBSERVAÇÕES é requerido")
     private String observacoes;
 
     @NotNull(message = "O campo TÉCNICO é requerido")
@@ -43,19 +43,7 @@ public class ChamadoDTO implements Serializable {
         super();
     }
 
-    public ChamadoDTO(Chamado obj) {
-        this.id = obj.getId();
-        this.dataAbertura = obj.getDataAbertura();
-        this.dataFechamento = obj.getDataFechamento();
-        this.prioridade = obj.getPrioridade().getCodigo();
-        this.status = obj.getStatus().getCodigo();
-        this.titulo = obj.getTitulo();
-        this.observacoes = obj.getObservacoes();
-        this.tecnico = obj.getTecnico().getId();
-        this.cliente = obj.getCliente().getId();
-        this.nomeTecnico = obj.getTecnico().getNome();
-        this.nomeCliente = obj.getCliente().getNome();
-    }
+    // Getters e Setters...
 
     public Integer getId() {
         return id;

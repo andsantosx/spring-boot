@@ -11,12 +11,14 @@ import com.spring_boot.api.services.exceptions.ObjectNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ChamadoService {
 
     @Autowired
@@ -26,11 +28,13 @@ public class ChamadoService {
     @Autowired
     private ClienteService clienteService;
 
+    @Transactional(readOnly = true)
     public Chamado findById(Integer id) {
         Optional<Chamado> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! ID: " + id));
     }
 
+    @Transactional(readOnly = true)
     public List<Chamado> findAll() {
         return repository.findAll();
     }
