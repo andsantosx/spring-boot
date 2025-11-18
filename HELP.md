@@ -1,33 +1,30 @@
-# Read Me First
-The following was discovered as part of building this project:
+# Links Úteis e Documentação
 
-* The original package name 'com.spring-boot.api' is invalid and this project uses 'com.spring_boot.api' instead.
+Este arquivo centraliza a documentação oficial das principais tecnologias e ferramentas utilizadas neste projeto.
 
-# Getting Started
+## Framework e Ecossistema Spring
 
-### Reference Documentation
-For further reference, please consider the following sections:
+- 🔗 **Spring Boot:** [https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
+  - *Guia de referência completo do Spring Boot.*
+- 🔗 **Spring Data JPA:** [https://docs.spring.io/spring-data/jpa/docs/current/reference/html/](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/)
+  - *Documentação sobre repositórios, queries e transações.*
+- 🔗 **Spring Web (MVC):** [https://docs.spring.io/spring-framework/docs/current/reference/html/web.html](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html)
+  - *Informações sobre Controllers, tratamento de requisições e mais.*
 
-* [Official Gradle documentation](https://docs.gradle.org)
-* [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/3.5.6/gradle-plugin)
-* [Create an OCI image](https://docs.spring.io/spring-boot/3.5.6/gradle-plugin/packaging-oci-image.html)
-* [Spring Web](https://docs.spring.io/spring-boot/3.5.6/reference/web/servlet.html)
-* [Spring Data JPA](https://docs.spring.io/spring-boot/3.5.6/reference/data/sql.html#data.sql.jpa-and-spring-data)
-* [Validation](https://docs.spring.io/spring-boot/3.5.6/reference/io/validation.html)
-* [Spring Boot DevTools](https://docs.spring.io/spring-boot/3.5.6/reference/using/devtools.html)
+## Ferramentas e Bibliotecas
 
-### Guides
-The following guides illustrate how to use some features concretely:
+- 🔗 **MapStruct:** [https://mapstruct.org/documentation/stable/reference/html/](https://mapstruct.org/documentation/stable/reference/html/)
+  - *Documentação completa sobre mapeamento de objetos.*
+- 🔗 **Springdoc-openapi (Swagger):** [https://springdoc.org/](https://springdoc.org/)
+  - *Guia para documentação de APIs com Spring Boot.*
+- 🔗 **Hibernate:** [https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html](https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html)
+  - *Guia do usuário do Hibernate, o provedor JPA utilizado.*
+- 🔗 **Maven:** [https://maven.apache.org/guides/](https://maven.apache.org/guides/)
+  - *Guias oficiais sobre o ciclo de vida e gerenciamento de dependências com Maven.*
+- 🔗 **Caelum Stella (Validador de CPF):** [https://github.com/caelum/caelum-stella](https://github.com/caelum/caelum-stella)
+  - *Repositório da biblioteca usada para a validação de CPF.*
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
-* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
-* [Validation](https://spring.io/guides/gs/validating-form-input/)
-* [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
+## Banco de Dados
 
-### Additional Links
-These additional references should also help you:
-
-* [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
-
+- 🔗 **MySQL:** [https://dev.mysql.com/doc/](https://dev.mysql.com/doc/)
+- 🔗 **H2 Database:** [https://www.h2database.com/html/main.html](https://www.h2database.com/html/main.html)
