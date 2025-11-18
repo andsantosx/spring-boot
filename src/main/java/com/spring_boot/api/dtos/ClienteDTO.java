@@ -1,10 +1,10 @@
 package com.spring_boot.api.dtos;
 
-import br.com.caelum.stella.bean.validation.CPF;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.io.Serializable;
 import java.time.LocalDate;
