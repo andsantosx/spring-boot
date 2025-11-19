@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-11-17T21:23:35-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Ubuntu)"
+    date = "2025-11-19T20:21:54-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 23.0.1 (Oracle Corporation)"
 )
 @Component
 public class ChamadoMapperImpl implements ChamadoMapper {
@@ -27,8 +27,8 @@ public class ChamadoMapperImpl implements ChamadoMapper {
 
         ChamadoDTO chamadoDTO = new ChamadoDTO();
 
-        chamadoDTO.setPrioridade( chamadoPrioridadeCodigo( chamado ) );
-        chamadoDTO.setStatus( chamadoStatusCodigo( chamado ) );
+        chamadoDTO.setPrioridade( chamadoPrioridadeDescricao( chamado ) );
+        chamadoDTO.setStatus( chamadoStatusDescricao( chamado ) );
         chamadoDTO.setTecnico( chamadoTecnicoId( chamado ) );
         chamadoDTO.setCliente( chamadoClienteId( chamado ) );
         chamadoDTO.setNomeTecnico( chamadoTecnicoNome( chamado ) );
@@ -56,7 +56,7 @@ public class ChamadoMapperImpl implements ChamadoMapper {
         return list;
     }
 
-    private Integer chamadoPrioridadeCodigo(Chamado chamado) {
+    private String chamadoPrioridadeDescricao(Chamado chamado) {
         if ( chamado == null ) {
             return null;
         }
@@ -64,14 +64,14 @@ public class ChamadoMapperImpl implements ChamadoMapper {
         if ( prioridade == null ) {
             return null;
         }
-        Integer codigo = prioridade.getCodigo();
-        if ( codigo == null ) {
+        String descricao = prioridade.getDescricao();
+        if ( descricao == null ) {
             return null;
         }
-        return codigo;
+        return descricao;
     }
 
-    private Integer chamadoStatusCodigo(Chamado chamado) {
+    private String chamadoStatusDescricao(Chamado chamado) {
         if ( chamado == null ) {
             return null;
         }
@@ -79,11 +79,11 @@ public class ChamadoMapperImpl implements ChamadoMapper {
         if ( status == null ) {
             return null;
         }
-        Integer codigo = status.getCodigo();
-        if ( codigo == null ) {
+        String descricao = status.getDescricao();
+        if ( descricao == null ) {
             return null;
         }
-        return codigo;
+        return descricao;
     }
 
     private Integer chamadoTecnicoId(Chamado chamado) {

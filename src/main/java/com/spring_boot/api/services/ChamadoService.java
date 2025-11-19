@@ -7,11 +7,13 @@ import com.spring_boot.api.domain.enums.Prioridade;
 import com.spring_boot.api.domain.enums.Status;
 import com.spring_boot.api.dtos.ChamadoDTO;
 import com.spring_boot.api.repositories.ChamadoRepository;
+import com.spring_boot.api.services.exceptions.DataIntegrityViolationException;
 import com.spring_boot.api.services.exceptions.ObjectNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -40,17 +42,49 @@ public class ChamadoService {
     }
 
     public Chamado create(@Valid ChamadoDTO objDTO) {
-        return repository.save(newChamado(objDTO));
+        return repository.save(newChamadoFromDTO(objDTO));
     }
 
     public Chamado update(Integer id, @Valid ChamadoDTO objDTO) {
-        objDTO.setId(id);
         Chamado oldObj = findById(id);
-        oldObj = newChamado(objDTO);
+        updateData(oldObj, objDTO);
         return repository.save(oldObj);
     }
 
-    private Chamado newChamado(ChamadoDTO obj) {
+    public void delete(Integer id) {
+        Chamado obj = findById(id);
+        if (!obj.getStatus().equals(Status.ENCERRADO)) {
+            throw new DataIntegrityViolationException("Chamados com status diferente de ENCERRADO não podem ser deletados!");
+        }
+        repository.deleteById(id);
+    }
+
+    private void updateData(Chamado entity, ChamadoDTO dto) {
+        if (StringUtils.hasText(dto.getPrioridade())) {
+            entity.setPrioridade(Prioridade.toEnum(dto.getPrioridade()));
+        }
+        if (StringUtils.hasText(dto.getStatus())) {
+            Status newStatus = Status.toEnum(dto.getStatus());
+            if (newStatus == Status.ENCERRADO && entity.getStatus() != Status.ENCERRADO) {
+                entity.setDataFechamento(LocalDate.now());
+            }
+            entity.setStatus(newStatus);
+        }
+        if (StringUtils.hasText(dto.getTitulo())) {
+            entity.setTitulo(dto.getTitulo());
+        }
+        if (StringUtils.hasText(dto.getObservacoes())) {
+            entity.setObservacoes(dto.getObservacoes());
+        }
+        if (dto.getTecnico() != null) {
+            entity.setTecnico(tecnicoService.findById(dto.getTecnico()));
+        }
+        if (dto.getCliente() != null) {
+            entity.setCliente(clienteService.findById(dto.getCliente()));
+        }
+    }
+
+    private Chamado newChamadoFromDTO(ChamadoDTO obj) {
         Tecnico tecnico = tecnicoService.findById(obj.getTecnico());
         Cliente cliente = clienteService.findById(obj.getCliente());
 
@@ -59,7 +93,7 @@ public class ChamadoService {
             chamado.setId(obj.getId());
         }
 
-        if (obj.getStatus().equals(2)) {
+        if (Status.toEnum(obj.getStatus()) == Status.ENCERRADO) {
             chamado.setDataFechamento(LocalDate.now());
         }
 

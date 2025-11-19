@@ -30,6 +30,18 @@ public enum Status {
                 return x;
             }
         }
-        throw new IllegalArgumentException("Status inválido");
+        throw new IllegalArgumentException("Status inválido: " + cod);
+    }
+
+    public static Status toEnum(String desc) {
+        if (desc == null) {
+            return null;
+        }
+        for (Status x : Status.values()) {
+            if (desc.equalsIgnoreCase(x.getDescricao())) {
+                return x;
+            }
+        }
+        throw new IllegalArgumentException("Status inválido: " + desc);
     }
 }

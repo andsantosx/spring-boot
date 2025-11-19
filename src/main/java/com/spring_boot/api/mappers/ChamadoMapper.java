@@ -10,8 +10,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ChamadoMapper {
 
-    @Mapping(source = "prioridade.codigo", target = "prioridade")
-    @Mapping(source = "status.codigo", target = "status")
+    @Mapping(source = "prioridade.descricao", target = "prioridade")
+    @Mapping(source = "status.descricao", target = "status")
     @Mapping(source = "tecnico.id", target = "tecnico")
     @Mapping(source = "cliente.id", target = "cliente")
     @Mapping(source = "tecnico.nome", target = "nomeTecnico")

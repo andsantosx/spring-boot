@@ -18,11 +18,11 @@ public class ChamadoDTO implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFechamento;
 
-    @NotNull(message = "O campo PRIORIDADE é requerido")
-    private Integer prioridade;
+    @NotBlank(message = "O campo PRIORIDADE é requerido")
+    private String prioridade;
 
-    @NotNull(message = "O campo STATUS é requerido")
-    private Integer status;
+    @NotBlank(message = "O campo STATUS é requerido")
+    private String status;
 
     @NotBlank(message = "O campo TÍTULO é requerido")
     private String titulo;
@@ -69,19 +69,19 @@ public class ChamadoDTO implements Serializable {
         this.dataFechamento = dataFechamento;
     }
 
-    public Integer getPrioridade() {
+    public String getPrioridade() {
         return prioridade;
     }
 
-    public void setPrioridade(Integer prioridade) {
+    public void setPrioridade(String prioridade) {
         this.prioridade = prioridade;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

@@ -48,10 +48,17 @@ public class ChamadoResource {
         return ResponseEntity.created(uri).build();
     }
 
-    @Operation(summary = "Atualiza os dados de um chamado")
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<ChamadoDTO> update(@PathVariable Integer id, @Valid @RequestBody ChamadoDTO objDTO) {
+    @Operation(summary = "Atualiza parcialmente os dados de um chamado")
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<ChamadoDTO> update(@PathVariable Integer id, @RequestBody ChamadoDTO objDTO) {
         Chamado newObj = service.update(id, objDTO);
         return ResponseEntity.ok().body(mapper.toDTO(newObj));
+    }
+
+    @Operation(summary = "Deleta um chamado pelo ID (apenas se estiver encerrado)")
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
